@@ -1,0 +1,65 @@
+---
+# tasks file for arch-setup
+
+- name: "Check HostName"
+  command: hostname
+  register: check_hostname
+  when: system_hostname is defined
+  changed_when: no
+  failed_when: no
+
+- name: "Set HostName"
+  command: "hostnamectl set-hostname {{ system_hostname }}"
+  when: system_hostname is defined and system_hostname != check_hostname.stdout
+  become: yes
+  register: set_hostname
+
+- name: Install packages
+  community.general.pacman:
+    name: "{{ item }}"
+    state: present
+    with_items: "{{ installed_packages }}"
+
+- name: Uninstall packages
+  community.general.pacman:
+    name: "{{ item }}"
+    state: absent
+    with_items: "{{ uninstalled_packages }}"
+
+- name: Install AUR packages
+  community.general.pacman:
+    name: "{{ item }}"
+    state: present
+    executable: yay
+    extra_args: --builddir /var/cache/yay
+    with_items: "{{ aur_installed_packages }}"
+
+- name: "Check if oh-my-zsh is installed"
+  stat:
+    path: ~/.oh-my-zsh/oh-my-zsh.sh
+  register: oh_my_zsh_check
+  when: install_oh_my_zsh
+
+- name: "Install oh-my-zsh"
+  shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+  when: not oh_my_zsh_check.stat.exists and install_oh_my_zsh
+
+- name: "Install pip packages"
+  pip:
+    name: "{{ pip_installed_packages }}"
+    executable: pip3
+
+- name: "Create directories"
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  with_items: "{{ directories_to_create }}"
+  tags:
+    - directories
+
+- name: "Install dotfiles"
+  template:
+    src: "templates/{{ item }}.j2"
+    dest: "~/{{ item }}"
+  with_items: "{{ dotfiles }}"

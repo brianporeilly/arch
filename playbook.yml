@@ -1,0 +1,6 @@
+---
+- hosts: all
+  become: no
+  become_method: sudo
+  roles:
+    - arch-setup

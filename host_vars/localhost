@@ -1,0 +1,51 @@
+system_hostname: {HOSTNAME}
+
+user_fullname: {USER_FULLNAME}
+user_email: {USER_EMAIL}
+
+# community.general.pacman
+installed_packages:
+  - git
+
+uninstalled_packages: []
+
+aur_installed_packages: []
+
+install_oh_my_zsh: yes
+
+pip_installed_packages:
+  - powerline-status
+
+directories_to_create:
+  - ~/Developer
+  - ~/.local/bin
+
+dotfiles:
+  - .gitconfig
+  - .gitignore_global
+  - .vimrc
+  - .ideavimrc
+  - .zshrc
+
+zsh_theme: robbyrussell
+zsh_plugins:
+  - git
+  - gitfast
+  - brew
+  - colorize
+  - copyfile
+  - docker
+  - docker-compose
+  - encode64
+  - python
+  - thefuck
+  - timer
+  - z
+zshrc_extra: |-
+  alias zshrc="vim ~/.zshrc"
+  alias gdc="git diff --cached"
+  alias k="kubectl"
+  alias k9="k9s"
+  alias ktx="kubectx"
+  alias kns="kubens"
+  export EDITOR='vim'
