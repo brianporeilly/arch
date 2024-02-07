@@ -2,7 +2,7 @@
 
 set -e
 
-VAR_FILE=ansible-osx/host_vars/localhost
+VAR_FILE=host_vars/localhost
 
 # check if template vars need to be filled out
 for VAR in "{HOSTNAME}" "{USER_FULLNAME}" "{USER_EMAIL}"
@@ -23,6 +23,5 @@ if [[ $? != 0 ]]; then
     exit 1
 fi
 
-cd ansible-osx
 ansible-galaxy install -r requirements.yml
 ansible-playbook playbook.yml --extra-vars="ansible_become_pass=$PASSWORD"

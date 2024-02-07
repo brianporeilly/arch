@@ -1,11 +1,12 @@
-system_hostname: {HOSTNAME}
+system_hostname: arch
 
-user_fullname: {USER_FULLNAME}
-user_email: {USER_EMAIL}
+user_fullname: Brian O'Reilly
+user_email: brian@bricriu.devBrian O'Reilly
 
 # community.general.pacman
 installed_packages:
   - git
+  - python-pipx
 
 uninstalled_packages: []
 

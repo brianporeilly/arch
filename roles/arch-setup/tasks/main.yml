@@ -18,13 +18,15 @@
   community.general.pacman:
     name: "{{ item }}"
     state: present
-    with_items: "{{ installed_packages }}"
+  become: yes
+  with_items: "{{ installed_packages }}"
 
 - name: Uninstall packages
   community.general.pacman:
     name: "{{ item }}"
     state: absent
-    with_items: "{{ uninstalled_packages }}"
+  become: yes
+  with_items: "{{ uninstalled_packages }}"
 
 - name: Install AUR packages
   community.general.pacman:
@@ -32,7 +34,8 @@
     state: present
     executable: yay
     extra_args: --builddir /var/cache/yay
-    with_items: "{{ aur_installed_packages }}"
+  become: yes
+  with_items: "{{ aur_installed_packages }}"
 
 - name: "Check if oh-my-zsh is installed"
   stat:
@@ -47,7 +50,7 @@
 - name: "Install pip packages"
   pip:
     name: "{{ pip_installed_packages }}"
-    executable: pip3
+    executable: pipx
 
 - name: "Create directories"
   file:
