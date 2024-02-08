@@ -2,7 +2,7 @@
 # tasks file for arch-setup
 
 - name: "Check HostName"
-  command: hostname
+  command: hostnamectl hostname
   register: check_hostname
   when: system_hostname is defined
   changed_when: no
