@@ -1,7 +1,7 @@
-system_hostname: arch
+system_hostname: {HOSTNAME}
 
-user_fullname: Brian O'Reilly
-user_email: brian@bricriu.devBrian O'Reilly
+user_fullname: {USER_FULLNAME}
+user_email: {USER_EMAIL}
 
 # community.general.pacman
 installed_packages:
